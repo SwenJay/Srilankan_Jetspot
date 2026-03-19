@@ -1,0 +1,5 @@
+# Block direct access to admin partials
+<FilesMatch "^(header|footer)\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>

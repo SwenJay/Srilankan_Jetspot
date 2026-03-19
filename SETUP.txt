@@ -1,0 +1,126 @@
+╔══════════════════════════════════════════════════════════════╗
+║         SL JETSPOT — PHP + MySQL SETUP GUIDE                ║
+║         InfinityFree Hosting · Full Stack                   ║
+╚══════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 1 — CREATE INFINITYFREE ACCOUNT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Go to https://infinityfree.net and sign up
+2. Create a new hosting account (choose a subdomain or add your own domain)
+3. Wait for activation (~1–2 minutes)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 2 — CREATE THE DATABASE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. In your InfinityFree Control Panel → MySQL Databases
+2. Create a new database — note the DB name, username, and password
+3. Note the DB host shown (e.g. sql200.infinityfree.com)
+4. Click "phpMyAdmin" to open the database tool
+5. Select your database → click "Import" → upload install.sql
+6. Click "Go" to run it — all tables and sample data will be created
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 3 — CONFIGURE THE SITE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Open includes/config.php and fill in your details:
+
+  define('DB_HOST',     'sql200.infinityfree.com');   ← from panel
+  define('DB_NAME',     'if0_XXXXXXX_jetspot');       ← your DB name
+  define('DB_USER',     'if0_XXXXXXX');               ← your DB user
+  define('DB_PASS',     'YOUR_PASSWORD');             ← your DB pass
+  define('SITE_URL',    'https://yoursite.com');      ← no trailing /
+  define('ADMIN_EMAIL', 'your@email.com');            ← for contact form
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 4 — UPLOAD FILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+In InfinityFree Control Panel → File Manager → open htdocs/
+
+Upload the ENTIRE contents of this folder:
+  ├── index.php
+  ├── .htaccess
+  ├── 404.php
+  ├── install.sql          ← can delete after setup
+  ├── includes/
+  │   ├── config.php
+  │   ├── db.php
+  │   └── auth.php
+  ├── admin/
+  │   ├── index.php
+  │   ├── login.php
+  │   ├── logout.php
+  │   ├── aircraft.php
+  │   ├── aircraft-add.php
+  │   ├── aircraft-edit.php
+  │   ├── messages.php
+  │   ├── change-password.php
+  │   └── partials/
+  │       ├── header.php
+  │       ├── footer.php
+  │       └── .htaccess
+  ├── api/
+  │   └── contact.php
+  ├── assets/
+  │   ├── css/
+  │   │   ├── style.css
+  │   │   └── admin.css
+  │   ├── js/
+  │   │   └── script.js
+  │   └── img/             ← copy your gear photos here
+  │       ├── canon.jpg        (rename from image.jpg)
+  │       ├── iphone15.jpg     (rename from Smartfon-APPLE...)
+  │       └── iphonexs.jpg     (rename from OIP.jpeg)
+  ├── uploads/             ← NEW aircraft images go here (auto)
+  └── img/                 ← your existing plane photos
+
+  IMPORTANT: chmod uploads/ to 755 (or 777 if 755 doesn't work)
+  In File Manager: right-click uploads/ → Change Permissions → 755
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 5 — LOGIN TO ADMIN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Visit:  https://yoursite.com/admin/login.php
+
+Default credentials (CHANGE THESE IMMEDIATELY):
+  Username: admin
+  Password: JetSpot2024!
+
+After login → go to Change Password and set a strong password.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  HOW TO ADD A NEW AIRCRAFT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Log into /admin/
+2. Click "Aircraft" → "Add Aircraft"
+3. Fill in all the details and upload the photo
+4. Set Published = ON
+5. Click Save → it appears on the public gallery instantly!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FEATURES SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PUBLIC SITE:
+  ✅ Dynamic gallery loaded from MySQL database
+  ✅ Filter by Airbus / Boeing / Other (auto-counts from DB)
+  ✅ Lightbox with keyboard + touch navigation
+  ✅ Hero stats pulled live from DB (aircraft count, airlines, airports)
+  ✅ Contact form with AJAX — saves to DB + emails you
+  ✅ Rate limiting on contact form (3/hr per IP)
+  ✅ Visitor tracking (30-day count shown in admin)
+  ✅ Fully mobile responsive
+
+ADMIN PANEL (/admin/):
+  ✅ Secure login with session management + auto-logout (2hr)
+  ✅ Dashboard with stats and recent activity
+  ✅ Add / edit / delete aircraft with image upload
+  ✅ Publish / unpublish aircraft (toggle)
+  ✅ Sort order control
+  ✅ Message inbox with unread badge
+  ✅ Reply to messages via email
+  ✅ Change password
+  ✅ CSRF protection on all forms
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Made by Swen Jayathunga · © 2024 Sri Lankan JetSpot
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

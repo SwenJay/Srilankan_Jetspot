@@ -1,0 +1,58 @@
+# ============================================================
+#  SL JetSpot — .htaccess (Apache / InfinityFree)
+# ============================================================
+
+Options -Indexes
+ServerSignature Off
+
+# ---- PHP settings ----
+php_value upload_max_filesize 10M
+php_value post_max_size 12M
+php_value max_execution_time 60
+
+# ---- Security headers ----
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ---- Block direct access to sensitive PHP files ----
+<FilesMatch "^(config|db|auth)\.php$">
+    Require all denied
+</FilesMatch>
+
+# ============================================================
+# 🔒 IMAGE HOTLINK PROTECTION
+# Blocks other websites from embedding your images
+# ============================================================
+
+RewriteEngine On
+
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https://swetech.ct.ws [NC]
+RewriteRule \.(jpg|jpeg|png|webp)$ - [F,L]
+
+# ⚠️ When you go live, change:
+# localhost/PHP/jetspot-php
+# to your real domain:
+# swetech.ct.ws
+
+# ---- Cache static assets ----
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg     "access plus 1 month"
+    ExpiresByType image/png      "access plus 1 month"
+    ExpiresByType image/webp     "access plus 1 month"
+    ExpiresByType text/css       "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# ---- Gzip compression ----
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript
+</IfModule>
+
+# ---- Pretty error pages ----
+ErrorDocument 404 /404.php

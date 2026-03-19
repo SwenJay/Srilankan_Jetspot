@@ -1,0 +1,22 @@
+# ============================================================
+#  SL JetSpot — robots.txt
+#  Tells search engines what they can and cannot crawl
+# ============================================================
+
+User-agent: *
+
+# Allow all public content
+Allow: /
+Allow: /assets/
+Allow: /uploads/
+Allow: /img/
+
+# Block admin, API, private folders
+Disallow: /admin/
+Disallow: /api/
+Disallow: /includes/
+Disallow: /uploads/full/
+Disallow: /404.php
+
+# Sitemap — update this URL to match your actual domain
+Sitemap: https://swetech.ct.ws/jetspot-php/sitemap.php
